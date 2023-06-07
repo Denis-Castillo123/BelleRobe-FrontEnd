@@ -4,11 +4,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './app/login/login.component';
+import { AgregarVestidoComponent } from './vestidos/agregar-vestido/agregar-vestido.component';
+import { VistaVestidoComponent } from './vestidos/vista-vestido/vista-vestido.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    AgregarVestidoComponent,
+    VistaVestidoComponent
   ],
   imports: [
     BrowserModule,

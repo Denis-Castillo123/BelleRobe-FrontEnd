@@ -27,22 +27,24 @@ export class HomeComponent implements OnInit, OnDestroy{
   }
  
   ngOnInit(): void {
-    this.sayHello();
+    //this.sayHello();
     this.getProducts();
   }
 
-  sayHello(){
+  /*sayHello(){
     this.storeService.sayHello()
       .subscribe(
         (response) => {
           console.log("random api ",response.message)
         });
-  }
+  }*/
 
   getProducts(): void{
     this.productSubscription = this.storeService.getAllProducts(this.count, this.sort, this.categoryToBeShown)
       .subscribe(
         (_products) => {
+          console.log("Vestidos");
+          console.log(_products);
           this.products = _products;
         });
   }
@@ -69,11 +71,11 @@ export class HomeComponent implements OnInit, OnDestroy{
 
   onAddProductToCart(product: Product):void{
     this.cartService.addItemToCart( {
-      productId: product.productId,
-      productImageLink: product.image,
-      productName: product.productName,
+      productId: product.idVestido,
+      productImageLink: product.imagen,
+      productName: product.nombreVestido,
       quantity: 1,
-      price: product.price
+      price: product.precio
     } )
   }
 

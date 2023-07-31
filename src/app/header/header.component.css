@@ -1,0 +1,8 @@
+.space-buttons {
+    flex: 1 1 auto;
+}
+
+.logo-img {
+    max-height: 100px !important; 
+    width: auto !important; /* Para mantener la proporción de la imagen */
+  }

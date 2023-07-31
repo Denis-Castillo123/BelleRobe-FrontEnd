@@ -1,0 +1,80 @@
+<div class="container mt-5">
+    <div class="card p-2">
+        <div class="row">
+            <div class="col-6">
+                <form #vestidoForm="ngForm" (ngSubmit)="addVestido(vestidoForm)">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <!-- <mat-label>Vestido</mat-label> -->
+                        <input matInput 
+                        placeholder="Vestido"
+                        [(ngModel)]="vestido.vestidoName"
+                        name="vestidoName">
+                    </mat-form-field>
+            
+                    <mat-form-field appearance="outline" class="w-100">
+                        <!-- <mat-label>Descripcion</mat-label> -->
+                        <input matInput placeholder="Descripcion"
+                        [(ngModel)]="vestido.vestidoDescription"
+                        name="vestidoDescription">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Precio Actual</mat-label>
+                        <input matInput placeholder="Vestido Actual Price"
+                        [(ngModel)]="vestido.vestidoActualPrice"
+                        name="vestidoActualPrice">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Precio descontado</mat-label>
+                        <input matInput placeholder="Vestido Discounted Price"
+                        [(ngModel)]="vestido.vestidoDiscountedPrice"
+                        name="vestidoDiscountedPrice">
+                    </mat-form-field>
+            
+                    <div align="end">
+                        <button mat-stroked-button color="primary" style="margin-right: 3px;">Limpiar</button>
+                        <button type="submit" mat-stroked-button color="primary" *ngIf="isNewVestido">Agregar Vestido</button>
+                        <button type="submit" mat-stroked-button color="primary" *ngIf="!isNewVestido">Actualizar Vestido</button>
+                    </div>
+                </form>
+            
+            </div>
+
+            <div class="col-6">
+                <div>
+
+                    <div class="dropzone"
+                    appDrag 
+                    (files) = "fileDropped($event)">
+                        <div class="text-wrapper">
+                            <div class="center">Arrastra tus imagenes
+                               <br> <a (click)="selectFile.click()" style="color:blueviolet;
+                                font-weight: 800;
+                                cursor: pointer;">Buscar</a>  una imagen</div>
+                            </div>
+                    </div>
+
+
+                    <input multiple
+                    type="file"
+                    style="display: none;"
+                    #selectFile  
+                    value="select"
+                    (change)="onFileSelected($event)">
+                </div>
+                <div class="mt-5">
+                    <div class="row">
+                        <mat-grid-list cols="4" rowHeight="1:1">
+                            <mat-grid-tile *ngFor="let file of vestido.vestidoImages; let i = index;">
+                                <div style="position: relative">
+                                    <span class="btn-remove-image" (click)="removeImages(i)">X</span>
+                                    <img [src]="file.url" width="100px" height="100px">
+                                </div>
+                            </mat-grid-tile>
+                        </mat-grid-list>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>

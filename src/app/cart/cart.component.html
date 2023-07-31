@@ -1,0 +1,39 @@
+<div class="container mt-5">
+
+  <div align="right" class="mb-3">
+    <button mat-raised-button (click)="checkout()" style="color: gold; padding: 10px 20px;">Checkout</button>
+  </div>
+
+    <table mat-table [dataSource]="cartDetails" class="mat-elevation-z8">
+        
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef> Vestido </th>
+          <td mat-cell *matCellDef="let element"> {{element.vestido.vestidoName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Description">
+            <th mat-header-cell *matHeaderCellDef> Descripción </th>
+            <td mat-cell *matCellDef="let element"> {{element.vestido.vestidoDescription}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Price">
+            <th mat-header-cell *matHeaderCellDef> Precio </th>
+            <td mat-cell *matCellDef="let element"> {{element.vestido.vestidoActualPrice}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Discounted Price">
+            <th mat-header-cell *matHeaderCellDef> Precio descontado </th>
+            <td mat-cell *matCellDef="let element"> {{element.vestido.vestidoDiscountedPrice}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Action">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-raised-button color="warn" (click)="delete(element.cartId)">Delete</button> </td>
+          </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+</div>

@@ -1,0 +1,44 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-6">
+
+            <div class="card image-container p-3">
+                <img [src]="vestido.vestidoImages[selectVestidoIndex].url"  style="width: 80%; height: 100%; margin: auto;" alt="">
+            </div>
+            <div class="mt-2">
+                <mat-grid-list cols="3" gutterSize="10" rowHeight="1:1">
+                    <mat-grid-tile *ngFor="let file of vestido.vestidoImages; let i = index" (click)="changeIndex(i)" style="border: 1px solid lightgrey; cursor: pointer;" 
+                    >
+                        <img [src]="file.url" style="height: 150px;" alt="">                    
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+            </div>
+            
+
+        </div>
+        <div class="col-6">
+            <div class="vestido-information">
+                <div class="mt-3">
+                   <h2> {{vestido.vestidoName}}</h2>
+                </div>
+                <div class="mt-3">
+                    Description: <br>
+                    {{vestido.vestidoDescription}}
+                </div>
+
+                <div class="mt-3">                    
+                   <b>Rs. {{vestido.vestidoDiscountedPrice}}</b> &nbsp;  <b style="text-decoration: line-through; color: red;">{{vestido.vestidoActualPrice}} </b>
+                </div>
+
+                <div class="mt-5 text-center">                    
+                    <button mat-raised-button color="warn" style="width: 200px;" (click)="buyVestido(vestido.vestidoId)">Rentar Ahora</button>
+                
+                    &nbsp;
+                    <button mat-raised-button  style="width: 200px; color: gold;" (click)="addToCart(vestido.vestidoId)">Añadir a la bolsa</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

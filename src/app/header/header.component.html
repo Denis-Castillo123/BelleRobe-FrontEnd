@@ -1,0 +1,19 @@
+<mat-toolbar color="primary">
+  <a routerLink="/">
+    <img src="../../../assets/imgs/logo.png" alt="BelleRobe logo" class="logo-img img-fluid mr-1 mt-5" srcset="">
+</a>
+  <span class="space-buttons"></span>
+  <button *ngIf="! isLoggedIn()" routerLink="/login" mat-raised-button color="primary">Ingresar</button>
+  <button *ngIf="isLoggedIn()" (click)="logout()" mat-raised-button color="warn">Salir</button>
+</mat-toolbar>
+
+<mat-toolbar color="primary" *ngIf="isLoggedIn()">
+  <span class="space-buttons"></span>
+  <button mat-raised-button color="primary" routerLink="/">Inicio</button>
+  <button *ngIf="!isAdmin()" mat-raised-button color="primary" routerLink="/cart">Bolsa</button>
+  <button *ngIf="!isAdmin()" mat-raised-button color="primary" routerLink="/myOrders">Mis Ordenes</button>
+  <button *ngIf="!isAdmin()||isAdmin()" mat-raised-button color="primary" routerLink="/addNewVestido">Rentar vestidos</button>
+  <button *ngIf="isAdmin()" mat-raised-button color="primary" routerLink="/showVestidoDetails">Todos los Vestidos</button>
+
+  <button *ngIf="isAdmin()" mat-raised-button color="primary" routerLink="/orderInformation">Ordenes</button>
+</mat-toolbar>

@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserAuthService } from '../_services/user-auth.service';
 import { UserService } from '../_services/user.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-login',
@@ -10,6 +12,7 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  showError = false;
   constructor(
     private userService: UserService,
     private userAuthService: UserAuthService,
@@ -23,19 +26,31 @@ export class LoginComponent implements OnInit {
       (response: any) => {
         this.userAuthService.setRoles(response.user.role);
         this.userAuthService.setToken(response.jwtToken);
-
+  
         const role = response.user.role[0].roleName;
         if (role === 'Admin') {
           this.router.navigate(['/admin']);
         } else {
           this.router.navigate(['/user']);
         }
+  
+        // Mostrar alerta de éxito con SweetAlert2
+        Swal.fire({
+          icon: 'success',
+          title: 'Inicio de sesión exitoso',
+          text: '¡Bienvenido de nuevo!',
+          timer: 3000, // Tiempo en milisegundos antes de que la notificación se cierre automáticamente
+          timerProgressBar: true, // Mostrar barra de progreso en el temporizador
+          position: 'top',
+        });
       },
       (error) => {
         console.log(error);
+        this.showError = true; 
       }
     );
   }
+  
 
   registerUser(){
     this.router.navigate(['/register']);

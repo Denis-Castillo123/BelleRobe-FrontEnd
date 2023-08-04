@@ -4,15 +4,15 @@
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Usuario</mat-label>
           <input matInput ngModel name="userName" id="userName" placeholder="Username" required>
-          <mat-error *ngIf="registerForm.controls.userName.invalid && registerForm.controls.userName.touched">
+          <mat-error *ngIf="registerForm.controls['userName'].invalid && registerForm.controls['userName'].touched">
             Usuario es requerido.
-          </mat-error>
+          </mat-error>          
         </mat-form-field>
   
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Nombre</mat-label>
           <input matInput ngModel name="userFirstName" id="userFirstName" placeholder="First Name" required>
-          <mat-error *ngIf="registerForm.controls.userFirstName.invalid && registerForm.controls.userFirstName.touched">
+          <mat-error *ngIf="registerForm.controls['userFirstName'].invalid && registerForm.controls['userFirstName'].touched">
             Nombre es requerido.
           </mat-error>
         </mat-form-field>
@@ -20,7 +20,7 @@
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Apellido</mat-label>
           <input matInput ngModel name="userLastName" id="userLastName" placeholder="Last Name" required>
-          <mat-error *ngIf="registerForm.controls.userLastName.invalid && registerForm.controls.userLastName.touched">
+          <mat-error *ngIf="registerForm.controls['userLastName'].invalid && registerForm.controls['userLastName'].touched">
             Apellido es requerido.
           </mat-error>
         </mat-form-field>
@@ -28,7 +28,7 @@
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Contraseña</mat-label>
           <input matInput ngModel name="userPassword" id="userPassword" placeholder="Password" required minlength="8">
-          <mat-error *ngIf="registerForm.controls.userPassword.invalid && registerForm.controls.userPassword.touched">
+          <mat-error *ngIf="registerForm.controls['userPassword'].invalid && registerForm.controls['userPassword'].touched">
             La contraseña debe tener al menos 8 caracteres.
           </mat-error>
         </mat-form-field>
@@ -37,7 +37,7 @@
           <mat-label>Confirmar Contraseña</mat-label>
           <input matInput ngModel name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required
             minlength="8" [pattern]="registerForm.value.userPassword">
-          <mat-error *ngIf="registerForm.controls.confirmPassword.invalid && registerForm.controls.confirmPassword.touched">
+          <mat-error *ngIf="registerForm.controls['confirmPassword'].invalid && registerForm.controls['confirmPassword'].touched">
             Las contraseñas no coinciden.
           </mat-error>
         </mat-form-field>

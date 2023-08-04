@@ -6,14 +6,15 @@
           <mat-label>Usuario</mat-label>
           <input matInput [(ngModel)]="loginForm.value['userName']" name="userName" id="userName" placeholder="Username" required email>
           <!-- Mensajes de validación -->
-          <mat-error *ngIf="loginForm.controls['userName'].errors?.required">Usuario es requerido.</mat-error>
+          <mat-error *ngIf="loginForm.controls['userName']['errors']?.['required']">Usuario es requerido.</mat-error>
+
         </mat-form-field>
   
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Contraseña</mat-label>
           <input type="password" matInput [(ngModel)]="loginForm.value['userPassword']" name="userPassword" id="userPassword" placeholder="Password" required>
           <!-- Mensajes de validación -->
-          <mat-error *ngIf="loginForm.controls['userPassword'].errors?.required">Contraseña es requerida.</mat-error>
+          <mat-error *ngIf="loginForm.controls['userPassword']['errors']?.['required']">Usuario es requerido.</mat-error>
         </mat-form-field>
   
         <button class="w-100" type="submit" mat-raised-button color="primary">Ingresar</button>

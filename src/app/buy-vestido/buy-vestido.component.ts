@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OrderDetails } from '../_model/order-details.model';
 import { Vestido } from '../_model/vestido.model';
 import { VestidoService } from '../_services/vestido.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-buy-vestido',
@@ -12,26 +14,27 @@ import { VestidoService } from '../_services/vestido.service';
 })
 export class BuyVestidoComponent implements OnInit {
 
-  isSingleVestidoCheckout : string = "";
-  vestidoDetails : Vestido[]=[];
-  orderDetails: OrderDetails={
-    fullName : '',
-	  fullAddress: '',
-	  contactNumber : '',
-	  alternateContactNumber : '',
-	  orderVestidoQuantityList : []
+  isSingleVestidoCheckout: string = "";
+  vestidoDetails: Vestido[] = [];
+  orderDetails: OrderDetails = {
+    fullName: '',
+    fullAddress: '',
+    contactNumber: '',
+    alternateContactNumber: '',
+    orderVestidoQuantityList: []
   }
-  constructor( private activatedRoute: ActivatedRoute,
-    private vestidoService : VestidoService,
+  constructor(private activatedRoute: ActivatedRoute,
+    private vestidoService: VestidoService,
     private router: Router) { }
 
   ngOnInit(): void {
-    this.vestidoDetails= this.activatedRoute.snapshot.data['vestidoDetails'];
+    this.vestidoDetails = this.activatedRoute.snapshot.data['vestidoDetails'];
 
-    this.isSingleVestidoCheckout = this.activatedRoute.snapshot.paramMap.get("isSingleVestidoCheckout")||"";
+    this.isSingleVestidoCheckout = this.activatedRoute.snapshot.paramMap.get("isSingleVestidoCheckout") || "";
     this.vestidoDetails.forEach(
       x => this.orderDetails.orderVestidoQuantityList.push(
-        {vestidoId: x.vestidoId, quantity: 1
+        {
+          vestidoId: x.vestidoId, quantity: 1
         }
       )
     );
@@ -39,21 +42,31 @@ export class BuyVestidoComponent implements OnInit {
     console.log(this.orderDetails);
   }
 
-  public placeOrder(orderForm : NgForm){
+  placeOrder(orderForm: NgForm) {
     this.vestidoService.placeOrder(this.orderDetails, this.isSingleVestidoCheckout).subscribe(
       (resp) => {
         console.log(resp);
         orderForm.reset();
-        this.router.navigate(["/orderConfirm"])
+        this.router.navigate(['/orderConfirm']);
+
+        // Mostrar notificación de éxito con SweetAlert2
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: 'La compra se ha realizado exitosamente.',
+          timer: 3000, // Tiempo en milisegundos antes de que la notificación se cierre automáticamente
+          timerProgressBar: true, // Mostrar barra de progreso en el temporizador
+          position: 'top',
+        });
       },
       (err) => {
         console.log(err);
       }
     );
-
   }
 
-  getQuantityForVestido(vestidoId: number){
+
+  getQuantityForVestido(vestidoId: number) {
     const filterVestido = this.orderDetails.orderVestidoQuantityList.filter(
       (vestidoQuantity) => vestidoQuantity.vestidoId === vestidoId
     );
@@ -61,26 +74,26 @@ export class BuyVestidoComponent implements OnInit {
 
   }
 
-  getCalculatedTotal(vestidoId: number, vestidoDiscountedPrice: number){
+  getCalculatedTotal(vestidoId: number, vestidoDiscountedPrice: number) {
     const filterVestido = this.orderDetails.orderVestidoQuantityList.filter(
       (vestidoQuantity) => vestidoQuantity.vestidoId === vestidoId
     );
-    return filterVestido[0].quantity*vestidoDiscountedPrice;
+    return filterVestido[0].quantity * vestidoDiscountedPrice;
 
   }
 
-  onQuantityChanged(q:number, vestidoId:number){
+  onQuantityChanged(q: number, vestidoId: number) {
     this.orderDetails.orderVestidoQuantityList.filter(
       (orderVestido) => orderVestido.vestidoId === vestidoId
-    )[0].quantity=q;
+    )[0].quantity = q;
   }
 
-  getCalculatedGrandTotal(){
+  getCalculatedGrandTotal() {
     let grandTotal = 0;
     this.orderDetails.orderVestidoQuantityList.forEach(
       (vestidoQuantity) => {
-        const price=this.vestidoDetails.filter(vestido => vestido.vestidoId === vestidoQuantity.vestidoId)[0].vestidoDiscountedPrice
-        grandTotal+=price*vestidoQuantity.quantity;
+        const price = this.vestidoDetails.filter(vestido => vestido.vestidoId === vestidoQuantity.vestidoId)[0].vestidoDiscountedPrice
+        grandTotal += price * vestidoQuantity.quantity;
       }
     );
     return grandTotal;

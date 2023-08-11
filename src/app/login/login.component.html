@@ -1,26 +1,27 @@
-<div class="container mt-5">
-    <div class="card" style="padding: 20px;">
+<div class="login-container">
+    <div class="login-form">
         <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-
-            <mat-form-field appearance="outline" class="w-100">
+            <mat-form-field appearance="fill" class="login-input">
                 <mat-label>Usuario</mat-label>
-                <input matInput ngModel name="userName" id="userName" placeholder="Username">
+                <input matInput [(ngModel)]="loginForm.value['userName']" name="userName" id="userName" placeholder="Usuario" required>
+                <mat-error *ngIf="loginForm.controls['userName']['errors']?.['required']">El usuario es requerido.</mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100">
+            <mat-form-field appearance="fill" class="login-input">
                 <mat-label>Contraseña</mat-label>
-                <input type="password" matInput ngModel name="userPassword" id="userPassword" placeholder="Password">
+                <input type="password" matInput [(ngModel)]="loginForm.value['userPassword']" name="userPassword" id="userPassword" placeholder="Contraseña" required>
+                <mat-error *ngIf="loginForm.controls['userPassword']['errors']?.['required']">La contraseña es requerida.</mat-error>
             </mat-form-field>
 
-              <button class="w-100" type="submit" mat-raised-button color="primary">Ingresar</button>
-           
+            <button class="login-button" type="submit" mat-raised-button color="primary">Ingresar</button>
         </form>
-
-       
     </div>
 
-    <div class="text-center">
-        <br>
-        <button class="w-20" type="button" mat-raised-button color="primary" (click)="registerUser()">Sign Up</button>
+    <div class="text-center mt-3">
+        <button class="register-button" mat-raised-button color="primary" (click)="registerUser()">Registrarse</button>
+    </div>
+    
+    <div *ngIf="showError" class="alert alert-danger mt-3">
+        Credenciales incorrectas. Verifica el usuario y contraseña e intenta nuevamente.
     </div>
 </div>

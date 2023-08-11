@@ -2,45 +2,53 @@
     <div class="card p-3">
         <div class="row">
             <div class="col-6">
-
                 <form #orderForm="ngForm" (ngSubmit)="placeOrder(orderForm)">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Nombre completo</mat-label>
                         <input matInput 
-                        placeholder="Full Name"
-                        [(ngModel)]="orderDetails.fullName"
-                        name="fullName">
+                               placeholder="Full Name"
+                               [(ngModel)]="orderDetails.fullName"
+                               name="fullName"
+                               required>
+                        <mat-error *ngIf="orderForm.controls['fullName'].hasError('required')">Nombre completo es requerido.</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Dirección</mat-label>
                         <input matInput 
-                        placeholder="Full address"
-                        [(ngModel)]="orderDetails.fullAddress"
-                        name="fullAddress">
+                               placeholder="Full address"
+                               [(ngModel)]="orderDetails.fullAddress"
+                               name="fullAddress"
+                               required>
+                        <mat-error *ngIf="orderForm.controls['fullAddress'].hasError('required')">Dirección es requerida.</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Número de contacto</mat-label>
                         <input matInput 
-                        placeholder="Contact number"
-                        [(ngModel)]="orderDetails.contactNumber"
-                        name="contactNumber">
+                               placeholder="Contact number"
+                               [(ngModel)]="orderDetails.contactNumber"
+                               name="contactNumber"
+                               required
+                               pattern="[0-9]*">
+                        <mat-error *ngIf="orderForm.controls['contactNumber'].hasError('required')">Número de contacto es requerido.</mat-error>
+                        <mat-error *ngIf="orderForm.controls['contactNumber'].hasError('pattern')">Número de contacto debe contener solo números.</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Número alterno</mat-label>
                         <input matInput 
-                        placeholder="Alternate contact number"
-                        [(ngModel)]="orderDetails.alternateContactNumber"
-                        name="alternateContactNumber">
+                               placeholder="Alternate contact number"
+                               [(ngModel)]="orderDetails.alternateContactNumber"
+                               name="alternateContactNumber"
+                               pattern="[0-9]*">
+                        <mat-error *ngIf="orderForm.controls['alternateContactNumber'].hasError('pattern')">Número alterno debe contener solo números.</mat-error>
                     </mat-form-field>
 
                     <div align="right">
                         <button type="submit" mat-stroked-button color="primary">Realizar pedido</button>
                     </div>
                 </form>
-
             </div>
 
             <div class="col-6">

@@ -1,19 +1,44 @@
-<mat-toolbar color="primary">
-  <a routerLink="/">
-    <img src="../../../assets/imgs/logo.png" alt="BelleRobe logo" class="logo-img img-fluid mr-1 mt-5" srcset="">
-</a>
-  <span class="space-buttons"></span>
-  <button *ngIf="! isLoggedIn()" routerLink="/login" mat-raised-button color="primary">Ingresar</button>
-  <button *ngIf="isLoggedIn()" (click)="logout()" mat-raised-button color="warn">Salir</button>
-</mat-toolbar>
-
-<mat-toolbar color="primary" *ngIf="isLoggedIn()">
-  <span class="space-buttons"></span>
-  <button mat-raised-button color="primary" routerLink="/">Inicio</button>
-  <button *ngIf="!isAdmin()" mat-raised-button color="primary" routerLink="/cart">Bolsa</button>
-  <button *ngIf="!isAdmin()" mat-raised-button color="primary" routerLink="/myOrders">Mis Ordenes</button>
-  <button *ngIf="!isAdmin()||isAdmin()" mat-raised-button color="primary" routerLink="/addNewVestido">Rentar vestidos</button>
-  <button *ngIf="isAdmin()" mat-raised-button color="primary" routerLink="/showVestidoDetails">Todos los Vestidos</button>
-
-  <button *ngIf="isAdmin()" mat-raised-button color="primary" routerLink="/orderInformation">Ordenes</button>
+<mat-toolbar color="primary" class="menu-toolbar">
+  <a routerLink="/" class="logo-link">
+    <img src="../../../assets/imgs/logo.png" alt="BelleRobe logo" class="logo-img" />
+  </a>
+  <span class="flex-space"></span>
+  <ng-container *ngIf="!isLoggedIn(); else loggedInButtons">
+    <button mat-raised-button color="primary" routerLink="/login">
+      <mat-icon>person</mat-icon>
+      Ingresar
+    </button>
+  </ng-container>
+  <ng-template #loggedInButtons>
+    <button mat-raised-button color="primary" routerLink="/">
+      <mat-icon>home</mat-icon>
+      Inicio
+    </button>
+    <button mat-raised-button color="primary" routerLink="/cart">
+      <mat-icon>shopping_cart</mat-icon>
+      Bolsa
+    </button>
+    <button mat-raised-button color="primary" routerLink="/myOrders">
+      <mat-icon>assignment</mat-icon>
+      Mis Ordenes
+    </button>
+    <ng-container *ngIf="isAdmin()">
+      <button mat-raised-button color="primary" routerLink="/addNewVestido">
+        <mat-icon>add_circle</mat-icon>
+        Agregar vestidos
+      </button>
+      <button mat-raised-button color="primary" routerLink="/showVestidoDetails">
+        <mat-icon>list</mat-icon>
+        Inventario
+      </button>
+      <button mat-raised-button color="primary" routerLink="/orderInformation">
+        <mat-icon>local_shipping</mat-icon>
+        Ordenes
+      </button>
+    </ng-container>
+    <button mat-raised-button color="warn" (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      Salir
+    </button>
+  </ng-template>
 </mat-toolbar>

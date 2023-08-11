@@ -1,33 +1,43 @@
-<div class="container mt-5">
-    <div class="card" style="padding: 20px;">
-        <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Usuario</mat-label>
-                <input matInput ngModel name="userName" id="userName" placeholder="Username">
-                
-            </mat-form-field>
+<div class="login-container">
+  <div class="login-form">
+      <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+          <mat-form-field appearance="fill" class="login-input">
+              <mat-label>Usuario</mat-label>
+              <input matInput [(ngModel)]="registerForm.value['userName']" name="userName" id="userName" placeholder="Usuario" required>
+              <mat-error *ngIf="registerForm.controls['userName'].invalid && registerForm.controls['userName'].touched">
+                El usuario es requerido.</mat-error>
+          </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Nombre</mat-label>
-                <input matInput ngModel name="userFirstName" id="userFirstName" placeholder="First Name">
-                
-            </mat-form-field>
+          <mat-form-field appearance="fill" class="login-input">
+              <mat-label>Nombre</mat-label>
+              <input matInput [(ngModel)]="registerForm.value['userFirstName']" name="userFirstName" id="userFirstName" placeholder="Nombre" required>
+              <mat-error *ngIf="registerForm.controls['userFirstName'].invalid && registerForm.controls['userFirstName'].touched">
+                El nombre es requerido.</mat-error>
+          </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Apellido</mat-label>
-                <input matInput ngModel name="userLastName" id="userLastName" placeholder="Last Name">
-               
-            </mat-form-field>
+          <mat-form-field appearance="fill" class="login-input">
+              <mat-label>Apellido</mat-label>
+              <input matInput [(ngModel)]="registerForm.value['userLastName']" name="userLastName" id="userLastName" placeholder="Apellido" required>
+              <mat-error *ngIf="registerForm.controls['userLastName'].invalid && registerForm.controls['userLastName'].touched">El apellido es requerido.</mat-error>
+          </mat-form-field>
 
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Contraseña</mat-label>
-                <input matInput ngModel name="userPassword" id="userPassword" placeholder="Password">
-                
-            </mat-form-field>
+          <mat-form-field appearance="fill" class="login-input">
+              <mat-label>Contraseña</mat-label>
+              <input type="password" matInput [(ngModel)]="registerForm.value['userPassword']" name="userPassword" id="userPassword" placeholder="Contraseña" required minlength="8">
+              <mat-error *ngIf="registerForm.controls['userPassword'].invalid && registerForm.controls['userPassword'].touched">La contraseña es requerida.</mat-error>
+          </mat-form-field>
 
-            <div class="text-center">
-                <button type="submit" mat-raised-button color="primary">Registrarse</button>
-            </div>
-        </form>
-    </div>
+          <mat-form-field appearance="fill" class="login-input">
+              <mat-label>Confirmar Contraseña</mat-label>
+              <input type="password" matInput [(ngModel)]="registerForm.value['confirmPassword']" name="confirmPassword" id="confirmPassword" placeholder="Confirmar Contraseña" required
+                  minlength="8" [pattern]="registerForm.value.userPassword">
+                  <mat-error *ngIf="registerForm.controls['confirmPassword'].hasError('required') || registerForm.controls['confirmPassword'].hasError('pattern')">
+                    Las contraseñas no coinciden.
+                  </mat-error>
+          </mat-form-field>
+
+          <button type="submit" mat-raised-button color="primary" [disabled]="!registerForm.valid">Registrarse</button>
+
+      </form>
+  </div>
 </div>

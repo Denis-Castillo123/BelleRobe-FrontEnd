@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { VestidoService } from '../_services/vestido.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-cart',
@@ -19,18 +21,29 @@ export class CartComponent implements OnInit {
     this.getCartDetails();
   }
 
-  delete(cartId: string){
-    console.log(cartId)
-    this.vestidoService.deleteCartItem(cartId).subscribe(
-      (resp) => {
-        console.log(resp);
-        this.getCartDetails();
-
-      },(error) =>{
-        console.log(error);
+  delete(cartId: string) {
+    Swal.fire({
+      icon: 'warning',
+      title: '¿Estás seguro?',
+      text: '¿Deseas eliminar este elemento del carrito?',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.vestidoService.deleteCartItem(cartId).subscribe(
+          (resp) => {
+            console.log(resp);
+            this.getCartDetails();
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       }
-    )
+    });
   }
+  
 
   getCartDetails(){
 

@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FileHandel } from '../_model/file-handel.model';
 import { Vestido } from '../_model/vestido.model';
 import { VestidoService } from '../_services/vestido.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-new-vestido',
@@ -36,19 +37,29 @@ export class AddNewVestidoComponent implements OnInit {
 
   }
 
-  addVestido(vestidoForm: NgForm){
+  addVestido(vestidoForm: NgForm) {
     const vestidoFormData = this.prepareFormData(this.vestido);
     this.vestidoService.addVestido(vestidoFormData).subscribe(
-      (response: Vestido)=>{
+      (response: Vestido) => {
         vestidoForm.reset();
         this.vestido.vestidoImages = [];
+  
+        // Mostrar notificación con SweetAlert2
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: 'El vestido se ha agregado exitosamente.',
+          timer: 3000, // Tiempo en milisegundos antes de que la notificación se cierre automáticamente
+          timerProgressBar: true, // Mostrar barra de progreso en el temporizador
+          position: 'top',
+        });
       },
-      (error: HttpErrorResponse)=>{
-        console.log(error)
+      (error: HttpErrorResponse) => {
+        console.log(error);
       }
-      );
-    
+    );
   }
+  
 
   prepareFormData(vestido: Vestido): FormData {
     const formData = new FormData();

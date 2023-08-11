@@ -7,6 +7,8 @@ import { ImageProcessingService } from '../image-processing.service';
 import { ShowVestidoImagesDialogComponent } from '../show-vestido-images-dialog/show-vestido-images-dialog.component';
 import { Vestido } from '../_model/vestido.model';
 import { VestidoService } from '../_services/vestido.service';
+import Swal from 'sweetalert2';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-show-vestido-details',
@@ -16,6 +18,7 @@ import { VestidoService } from '../_services/vestido.service';
 export class ShowVestidoDetailsComponent implements OnInit {
 
   showLoadMoreVestidoButton = false;
+  refreshTableTrigger = 0;
   showTable = false;
   pageNumber: number = 0;
   vestidoDetails : Vestido[] =[];
@@ -23,7 +26,8 @@ export class ShowVestidoDetailsComponent implements OnInit {
   constructor(private vestidoService: VestidoService ,
     public imagesDialog: MatDialog,
     private imageProcessingService: ImageProcessingService,
-    private router: Router) { }
+    private router: Router,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getAllVestidos();
@@ -39,6 +43,7 @@ export class ShowVestidoDetailsComponent implements OnInit {
 
   public getAllVestidos(searchKey: string =""){
     this.showTable = false;
+    this.vestidoDetails = []; 
     this.vestidoService.getAllVestidos(this.pageNumber, searchKey)
     .pipe(
       map((x: Vestido[], i) => x.map((vestido: Vestido) => this.imageProcessingService.createImages(vestido)))
@@ -59,6 +64,7 @@ export class ShowVestidoDetailsComponent implements OnInit {
       }
 
     );
+    this.refreshTableTrigger++;
   }
 
   loadMoreVestido(){
@@ -66,15 +72,26 @@ export class ShowVestidoDetailsComponent implements OnInit {
     this.getAllVestidos();
   }
 
-  deleteVestido(vestidoId:number){
+  deleteVestido(vestidoId: number) {
     this.vestidoService.deleteVestido(vestidoId).subscribe(
-      (resp)=> {
-        this.getAllVestidos();
+      (resp) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Eliminado',
+          text: 'El vestido fue eliminado exitosamente.',
+          timer: 3000,
+          timerProgressBar: true,
+          position: 'center',
+        }).then(() => {
+          this.getAllVestidos();
+        });
       },
       (error: HttpErrorResponse) => {
-        console.log(error);}
-    );    
+        console.log(error);
+      }
+    );
   }
+  
 
   showImages(vestido: Vestido){
     console.log(vestido);
@@ -90,6 +107,10 @@ export class ShowVestidoDetailsComponent implements OnInit {
 
   editVestidoDetails(vestidoId:number){
     this.router.navigate(['/addNewVestido', {vestidoId: vestidoId}])
+  }
+
+  trackByVestidoId(index: number, item: Vestido) {
+    return item.vestidoId;
   }
 
 }

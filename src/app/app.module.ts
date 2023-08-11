@@ -35,6 +35,9 @@ import { RegisterComponent } from './register/register.component';
 import { CartComponent } from './cart/cart.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { OrderDetaisComponent } from './order-detais/order-detais.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -55,7 +58,8 @@ import { OrderDetaisComponent } from './order-detais/order-detais.component';
     RegisterComponent,
     CartComponent,
     MyOrdersComponent,
-    OrderDetaisComponent
+    OrderDetaisComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,7 +75,10 @@ import { OrderDetaisComponent } from './order-detais/order-detais.component';
     MatGridListModule,
     MatTableModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   providers: [
     AuthGuard,

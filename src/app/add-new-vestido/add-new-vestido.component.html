@@ -4,30 +4,40 @@
             <div class="col-6">
                 <form #vestidoForm="ngForm" (ngSubmit)="addVestido(vestidoForm)">
                     <mat-form-field appearance="outline" class="w-100">
-                        <!-- <mat-label>Vestido</mat-label> -->
                         <input matInput 
-                        placeholder="Vestido"
-                        [(ngModel)]="vestido.vestidoName"
-                        name="vestidoName">
+                               placeholder="Vestido"
+                               [(ngModel)]="vestido.vestidoName"
+                               name="vestidoName"
+                               required>
+                        <mat-error *ngIf="vestidoForm.controls['vestidoName'].hasError('required')">El nombre del vestido es requerido.</mat-error>
                     </mat-form-field>
             
                     <mat-form-field appearance="outline" class="w-100">
-                        <!-- <mat-label>Descripcion</mat-label> -->
                         <input matInput placeholder="Descripcion"
-                        [(ngModel)]="vestido.vestidoDescription"
-                        name="vestidoDescription">
+                               [(ngModel)]="vestido.vestidoDescription"
+                               name="vestidoDescription"
+                               required>
+                        <mat-error *ngIf="vestidoForm.controls['vestidoDescription'].hasError('required')">La descripción del vestido es requerida.</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Precio Actual</mat-label>
                         <input matInput placeholder="Vestido Actual Price"
-                        [(ngModel)]="vestido.vestidoActualPrice"
-                        name="vestidoActualPrice">
+                               [(ngModel)]="vestido.vestidoActualPrice"
+                               name="vestidoActualPrice"
+                               required
+                               pattern="[0-9]*">
+                        <mat-error *ngIf="vestidoForm.controls['vestidoActualPrice'].hasError('required')">El precio actual es requerido.</mat-error>
+                        <mat-error *ngIf="vestidoForm.controls['vestidoActualPrice'].hasError('pattern')">El precio debe contener solo números.</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Precio descontado</mat-label>
                         <input matInput placeholder="Vestido Discounted Price"
-                        [(ngModel)]="vestido.vestidoDiscountedPrice"
-                        name="vestidoDiscountedPrice">
+                               [(ngModel)]="vestido.vestidoDiscountedPrice"
+                               name="vestidoDiscountedPrice"
+                               required
+                               pattern="[0-9]*">
+                        <mat-error *ngIf="vestidoForm.controls['vestidoDiscountedPrice'].hasError('required')">El precio descontado es requerido.</mat-error>
+                        <mat-error *ngIf="vestidoForm.controls['vestidoDiscountedPrice'].hasError('pattern')">El precio debe contener solo números.</mat-error>
                     </mat-form-field>
             
                     <div align="end">
@@ -36,7 +46,6 @@
                         <button type="submit" mat-stroked-button color="primary" *ngIf="!isNewVestido">Actualizar Vestido</button>
                     </div>
                 </form>
-            
             </div>
 
             <div class="col-6">
@@ -46,7 +55,7 @@
                     appDrag 
                     (files) = "fileDropped($event)">
                         <div class="text-wrapper">
-                            <div class="center">Arrastra tus imagenes
+                            <div class="center">Arrastra tus imagenes ó
                                <br> <a (click)="selectFile.click()" style="color:blueviolet;
                                 font-weight: 800;
                                 cursor: pointer;">Buscar</a>  una imagen</div>

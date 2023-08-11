@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserAuthService } from '../_services/user-auth.service';
 import { UserService } from '../_services/user.service';
@@ -12,12 +12,20 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
   showError = false;
   constructor(
     private userService: UserService,
     private userAuthService: UserAuthService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+
+    this.loginForm = this.fb.group({
+      userName: ['', Validators.required],
+      userPassword: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {}
 
@@ -29,9 +37,9 @@ export class LoginComponent implements OnInit {
   
         const role = response.user.role[0].roleName;
         if (role === 'Admin') {
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/']);
         } else {
-          this.router.navigate(['/user']);
+          this.router.navigate(['/']);
         }
   
         // Mostrar alerta de éxito con SweetAlert2

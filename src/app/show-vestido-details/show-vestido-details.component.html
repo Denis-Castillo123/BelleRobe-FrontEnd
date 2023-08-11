@@ -2,6 +2,7 @@
 
   <mat-form-field appearance="outline" class="w-50">
     <!--<mat-label>Busca tu vestido</mat-label>-->
+    <mat-icon matPrefix>search</mat-icon>
     <input 
     #searchkeyword
     (keyup) ="searchByKeyword(searchkeyword.value)"
@@ -10,7 +11,7 @@
 
   <div *ngIf="showTable">
 
-<table mat-table [dataSource]="vestidoDetails" class="mat-elevation-z8">
+<table mat-table [dataSource]="vestidoDetails"  [trackBy]="trackByVestidoId" class="mat-elevation-z8">
 
     
     <!-- Position Column -->

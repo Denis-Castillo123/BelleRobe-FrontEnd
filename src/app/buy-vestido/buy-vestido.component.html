@@ -9,7 +9,7 @@
                                placeholder="Full Name"
                                [(ngModel)]="orderDetails.fullName"
                                name="fullName"
-                               required>
+                               required maxlength="100">
                         <mat-error *ngIf="orderForm.controls['fullName'].hasError('required')">Nombre completo es requerido.</mat-error>
                     </mat-form-field>
 
@@ -19,7 +19,7 @@
                                placeholder="Full address"
                                [(ngModel)]="orderDetails.fullAddress"
                                name="fullAddress"
-                               required>
+                               required maxlength="100">
                         <mat-error *ngIf="orderForm.controls['fullAddress'].hasError('required')">Dirección es requerida.</mat-error>
                     </mat-form-field>
 

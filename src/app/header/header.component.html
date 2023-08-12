@@ -10,15 +10,15 @@
     </button>
   </ng-container>
   <ng-template #loggedInButtons>
-    <button mat-raised-button color="primary" routerLink="/">
+    <button mat-raised-button color="primary" routerLink="/" >
       <mat-icon>home</mat-icon>
       Inicio
     </button>
-    <button mat-raised-button color="primary" routerLink="/cart">
+    <button mat-raised-button color="primary" routerLink="/cart" *ngIf="!isAdmin()">
       <mat-icon>shopping_cart</mat-icon>
       Bolsa
     </button>
-    <button mat-raised-button color="primary" routerLink="/myOrders">
+    <button mat-raised-button color="primary" routerLink="/myOrders" *ngIf="!isAdmin()">
       <mat-icon>assignment</mat-icon>
       Mis Ordenes
     </button>

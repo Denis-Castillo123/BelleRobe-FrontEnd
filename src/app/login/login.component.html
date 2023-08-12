@@ -3,7 +3,7 @@
         <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
             <mat-form-field appearance="fill" class="login-input">
                 <mat-label>Usuario</mat-label>
-                <input matInput [(ngModel)]="loginForm.value['userName']" name="userName" id="userName" placeholder="Usuario" required>
+                <input matInput [(ngModel)]="loginForm.value['userName']" name="userName" id="userName" placeholder="Usuario" required maxlength="70">
                 <mat-error *ngIf="loginForm.controls['userName']['errors']?.['required']">El usuario es requerido.</mat-error>
             </mat-form-field>
 

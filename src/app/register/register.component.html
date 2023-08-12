@@ -3,21 +3,21 @@
       <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
           <mat-form-field appearance="fill" class="login-input">
               <mat-label>Usuario</mat-label>
-              <input matInput [(ngModel)]="registerForm.value['userName']" name="userName" id="userName" placeholder="Usuario" required>
+              <input matInput [(ngModel)]="registerForm.value['userName']" name="userName" id="userName" placeholder="Usuario" required maxlength="70">
               <mat-error *ngIf="registerForm.controls['userName'].invalid && registerForm.controls['userName'].touched">
                 El usuario es requerido.</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="fill" class="login-input">
               <mat-label>Nombre</mat-label>
-              <input matInput [(ngModel)]="registerForm.value['userFirstName']" name="userFirstName" id="userFirstName" placeholder="Nombre" required>
+              <input matInput [(ngModel)]="registerForm.value['userFirstName']" name="userFirstName" id="userFirstName" placeholder="Nombre" required maxlength="70">
               <mat-error *ngIf="registerForm.controls['userFirstName'].invalid && registerForm.controls['userFirstName'].touched">
                 El nombre es requerido.</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="fill" class="login-input">
               <mat-label>Apellido</mat-label>
-              <input matInput [(ngModel)]="registerForm.value['userLastName']" name="userLastName" id="userLastName" placeholder="Apellido" required>
+              <input matInput [(ngModel)]="registerForm.value['userLastName']" name="userLastName" id="userLastName" placeholder="Apellido" required maxlength="70">
               <mat-error *ngIf="registerForm.controls['userLastName'].invalid && registerForm.controls['userLastName'].touched">El apellido es requerido.</mat-error>
           </mat-form-field>
 

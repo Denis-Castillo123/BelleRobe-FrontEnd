@@ -6,5 +6,5 @@ export interface OrderDetails {
 	  fullAddress: String;
 	  contactNumber : String;
 	  alternateContactNumber : String;
-	  orderVestidoQuantityList : OrderQuantity[];
+	  orderDressQuantityList : OrderQuantity[];
 }

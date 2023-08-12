@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./buy-vestido.component.css']
 })
 export class BuyVestidoComponent implements OnInit {
-  objeto:any
+
   isSingleVestidoCheckout: string = "";
   vestidoDetails: Vestido[] = [];
   orderDetails: OrderDetails = {
@@ -21,7 +21,7 @@ export class BuyVestidoComponent implements OnInit {
     fullAddress: '',
     contactNumber: '',
     alternateContactNumber: '',
-    orderVestidoQuantityList: []
+    orderDressQuantityList: []
   }
   constructor(private activatedRoute: ActivatedRoute,
     private vestidoService: VestidoService,
@@ -32,27 +32,28 @@ export class BuyVestidoComponent implements OnInit {
 
     this.isSingleVestidoCheckout = this.activatedRoute.snapshot.paramMap.get("isSingleVestidoCheckout") || "";
     this.vestidoDetails.forEach(
-      x => this.orderDetails.orderVestidoQuantityList.push(
+      x => this.orderDetails.orderDressQuantityList.push(
         {
           vestidoId: x.vestidoId, quantity: 1
         }
       )
     );
-    this.objeto = {
-      orderDressQuantityList: this.orderDetails.orderVestidoQuantityList
-     }
     console.log(this.vestidoDetails);
     console.log(this.orderDetails);
   }
 
   placeOrder(orderForm: NgForm) {
-    console.log(this.objeto);
-    this.vestidoService.placeOrder(this.objeto, this.isSingleVestidoCheckout).subscribe(
+    this.orderDetails.fullName = orderForm.form.value.fullName;
+    this.orderDetails.fullAddress = orderForm.form.value.fullAddress;
+    this.orderDetails.contactNumber = orderForm.form.value.contactNumber;
+    this.orderDetails.alternateContactNumber = orderForm.form.value.alternateContactNumber;
+
+    console.log(this.orderDetails);
+    this.vestidoService.placeOrder(this.orderDetails, this.isSingleVestidoCheckout).subscribe(
       (resp) => {
-        console.log("Place older resp");
+        console.log("Place oder resp");
         console.log(resp);
         orderForm.reset();
-        this.router.navigate(['/orderConfirm']);
 
         // Mostrar notificación de éxito con SweetAlert2
         Swal.fire({
@@ -63,6 +64,9 @@ export class BuyVestidoComponent implements OnInit {
           timerProgressBar: true, // Mostrar barra de progreso en el temporizador
           position: 'top',
         });
+
+        this.router.navigate(['/orderConfirm']);
+
       },
       (err) => {
         console.log(err);
@@ -72,7 +76,7 @@ export class BuyVestidoComponent implements OnInit {
 
 
   getQuantityForVestido(vestidoId: number) {
-    const filterVestido = this.orderDetails.orderVestidoQuantityList.filter(
+    const filterVestido = this.orderDetails.orderDressQuantityList.filter(
       (vestidoQuantity) => vestidoQuantity.vestidoId === vestidoId
     );
     return filterVestido[0].quantity;
@@ -80,7 +84,7 @@ export class BuyVestidoComponent implements OnInit {
   }
 
   getCalculatedTotal(vestidoId: number, vestidoDiscountedPrice: number) {
-    const filterVestido = this.orderDetails.orderVestidoQuantityList.filter(
+    const filterVestido = this.orderDetails.orderDressQuantityList.filter(
       (vestidoQuantity) => vestidoQuantity.vestidoId === vestidoId
     );
     return filterVestido[0].quantity * vestidoDiscountedPrice;
@@ -88,14 +92,14 @@ export class BuyVestidoComponent implements OnInit {
   }
 
   onQuantityChanged(q: number, vestidoId: number) {
-    this.orderDetails.orderVestidoQuantityList.filter(
+    this.orderDetails.orderDressQuantityList.filter(
       (orderVestido) => orderVestido.vestidoId === vestidoId
     )[0].quantity = q;
   }
 
   getCalculatedGrandTotal() {
     let grandTotal = 0;
-    this.orderDetails.orderVestidoQuantityList.forEach(
+    this.orderDetails.orderDressQuantityList.forEach(
       (vestidoQuantity) => {
         const price = this.vestidoDetails.filter(vestido => vestido.vestidoId === vestidoQuantity.vestidoId)[0].vestidoDiscountedPrice
         grandTotal += price * vestidoQuantity.quantity;

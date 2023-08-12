@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./buy-vestido.component.css']
 })
 export class BuyVestidoComponent implements OnInit {
-
+  objeto:any
   isSingleVestidoCheckout: string = "";
   vestidoDetails: Vestido[] = [];
   orderDetails: OrderDetails = {
@@ -38,13 +38,18 @@ export class BuyVestidoComponent implements OnInit {
         }
       )
     );
+    this.objeto = {
+      orderDressQuantityList: this.orderDetails.orderVestidoQuantityList
+     }
     console.log(this.vestidoDetails);
     console.log(this.orderDetails);
   }
 
   placeOrder(orderForm: NgForm) {
-    this.vestidoService.placeOrder(this.orderDetails, this.isSingleVestidoCheckout).subscribe(
+    console.log(this.objeto);
+    this.vestidoService.placeOrder(this.objeto, this.isSingleVestidoCheckout).subscribe(
       (resp) => {
+        console.log("Place older resp");
         console.log(resp);
         orderForm.reset();
         this.router.navigate(['/orderConfirm']);
@@ -53,7 +58,7 @@ export class BuyVestidoComponent implements OnInit {
         Swal.fire({
           icon: 'success',
           title: 'Éxito',
-          text: 'La compra se ha realizado exitosamente.',
+          text: 'La orden se ha realizado exitosamente.',
           timer: 3000, // Tiempo en milisegundos antes de que la notificación se cierre automáticamente
           timerProgressBar: true, // Mostrar barra de progreso en el temporizador
           position: 'top',
